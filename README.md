@@ -40,3 +40,56 @@
 <p>Treat unhealthy patients in each room. And check for the unhealthy patients in random room</p>
 <h3>STEP 5:</h3>
 <p>Measure the performance parameters: For each treatment performance incremented, for each movement performance decremented</p>
+
+<H3>PROGRAM</H3>
+
+```
+import random
+
+class Hospital:
+    def __init__(self):
+        self.rooms = {'A': 98.0, 'B': 98.0}
+        self.loc = 'A'
+        self.limit = 98.5
+
+    def make_unhealthy(self):
+        r = random.choice(['A','B'])
+        self.rooms[r] = round(random.uniform(98.6,103),1)
+        return r
+
+class Agent:
+    def __init__(self):
+        self.score = 0
+
+    def act(self, env):
+        temp = env.rooms[env.loc]
+        print(f"Agent in {env.loc}, Temp: {temp}")
+
+        if temp > env.limit:
+            print(f"Treating Room {env.loc}")
+            env.rooms[env.loc] = 98.0
+            self.score += 10
+
+        env.loc = 'B' if env.loc == 'A' else 'A'
+        self.score -= 1
+
+env = Hospital()
+agent = Agent()
+
+for i in range(5):
+    r = env.make_unhealthy()
+    print(f"\nStep {i+1}: Room {r} fever ({env.rooms[r]})")
+    agent.act(env)
+
+print("\nFinal Performance:", agent.score)
+```
+
+<H3>OUTPUT</H3>
+
+<img width="443" height="687" alt="image" src="https://github.com/user-attachments/assets/d9777eb5-179d-4abe-96a7-b987563a8d59" />
+
+<H3>RESULT</H3>
+
+Thus,the python program to develop AI agent using PEAS Description is executed successfully.
+
+
